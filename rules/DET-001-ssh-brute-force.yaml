@@ -1,0 +1,14 @@
+detection_id: DET-001
+name: Repeated SSH Authentication Failures
+description: Detects repeated failed SSH authentication attempts from the same source.
+severity: high
+conditions:
+  event_type: authentication_failure
+  action: ssh_login_failed
+threshold: 5
+window_seconds: 300
+group_by:
+  - host_id
+  - source_ip
+  - username
+mitre_attack_id: T1110
