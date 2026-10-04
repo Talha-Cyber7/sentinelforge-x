@@ -30,5 +30,53 @@
       "service": "sshd",
       "message": "Failed password for alex"
     }
+  },
+  {
+    "event_id": "9a4f1d35-8e6e-4a2e-9a72-4d8e8c6d1003",
+    "timestamp": "2026-10-04T14:02:35Z",
+    "host_id": "linux-lab-01",
+    "source": "linux_auth",
+    "category": "authentication",
+    "event_type": "authentication_failure",
+    "action": "ssh_login_failed",
+    "severity": "medium",
+    "username": "alex",
+    "source_ip": "192.168.56.20",
+    "raw_data": {
+      "service": "sshd",
+      "message": "Failed password for alex"
+    }
+  },
+  {
+    "event_id": "9a4f1d35-8e6e-4a2e-9a72-4d8e8c6d1004",
+    "timestamp": "2026-10-04T14:02:47Z",
+    "host_id": "linux-lab-01",
+    "source": "linux_auth",
+    "category": "authentication",
+    "event_type": "authentication_failure",
+    "action": "ssh_login_failed",
+    "severity": "medium",
+    "username": "alex",
+    "source_ip": "192.168.56.20",
+    "raw_data": {
+      "service": "sshd",
+      "message": "Failed password for alex"
+    }
+  },
+  {
+    "event_id": "9a4f1d35-8e6e-4a2e-9a72-4d8e8c6d1005",
+    "timestamp": "2026-10-04T14:02:59Z",
+    "host_id": "linux-lab-01",
+    "source": "linux_auth",
+    "category": "authentication",
+    "event_type": "authentication_failure",
+    "action": "ssh_login_failed",
+    "severity": "medium",
+    "username": "alex",
+    "source_ip": "192.168.56.20",
+    "raw_data": {
+      "service": "sshd",
+      "message": "Failed password for alex"
+    }
   }
 ]
