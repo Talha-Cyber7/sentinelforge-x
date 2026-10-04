@@ -30,9 +30,7 @@ def load_json_events(path: Path) -> list[SecurityEvent]:
     try:
         raw_text = path.read_text(encoding="utf-8")
     except OSError as exc:
-        raise EventIngestionError(
-            f"Could not read event file '{path}': {exc}"
-        ) from exc
+        raise EventIngestionError(f"Could not read event file '{path}': {exc}") from exc
 
     try:
         payload: Any = json.loads(raw_text)
@@ -55,9 +53,7 @@ def load_json_events(path: Path) -> list[SecurityEvent]:
 
     for index, record in enumerate(records):
         if not isinstance(record, dict):
-            raise EventIngestionError(
-                f"Event at index {index} must be a JSON object"
-            )
+            raise EventIngestionError(f"Event at index {index} must be a JSON object")
 
         try:
             event = SecurityEvent.model_validate(record)
