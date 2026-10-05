@@ -139,3 +139,51 @@ class StoredAlert(Base):
         Integer,
         default=1,
     )
+
+
+class StoredIncident(Base):
+    """An investigation persisted in the database."""
+
+    __tablename__ = "incidents"
+
+    incident_id: Mapped[str] = mapped_column(
+        String(36),
+        primary_key=True,
+    )
+    title: Mapped[str] = mapped_column(
+        String(255),
+    )
+    description: Mapped[str] = mapped_column(
+        Text,
+    )
+    severity: Mapped[str] = mapped_column(
+        String(50),
+        index=True,
+    )
+    status: Mapped[str] = mapped_column(
+        String(50),
+        index=True,
+    )
+    alert_ids: Mapped[list[str]] = mapped_column(
+        JSON,
+    )
+    summary: Mapped[str] = mapped_column(
+        Text,
+        default="",
+    )
+    resolution_notes: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        index=True,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        index=True,
+    )
+    schema_version: Mapped[int] = mapped_column(
+        Integer,
+        default=1,
+    )
