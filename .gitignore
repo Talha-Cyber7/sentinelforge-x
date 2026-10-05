@@ -37,3 +37,5 @@ logs/local/
 build/
 dist/
 *.egg-info/
+# Generated reports
+reports/
