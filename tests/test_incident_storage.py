@@ -1,5 +1,6 @@
 """Tests for SQLite persistence of investigation incidents."""
 
+from datetime import UTC
 from uuid import uuid4
 
 import pytest
@@ -9,6 +10,7 @@ from sentinelforge.incidents.models import (
     Incident,
     IncidentStatus,
 )
+from sentinelforge.incidents.service import IncidentTransitionError
 from sentinelforge.models.events import Severity
 from sentinelforge.storage.database import (
     Base,
@@ -20,6 +22,7 @@ from sentinelforge.storage.incident_repository import (
     get_incident,
     list_incidents,
     persist_incidents,
+    update_incident_status,
 )
 from sentinelforge.storage.models import StoredIncident
 
@@ -122,5 +125,79 @@ def test_duplicate_incident_id_raises_persistence_error() -> None:
         persist_incidents(session, [incident])
 
     assert len(list_incidents(session)) == 1
+
+    session.close()
+
+
+def test_database_status_update_uses_lifecycle_rules() -> None:
+    """A valid lifecycle transition should update the stored incident."""
+
+    session = create_test_session()
+    incident = make_incident()
+
+    persist_incidents(session, [incident])
+
+    updated = update_incident_status(
+        session,
+        incident.incident_id,
+        IncidentStatus.INVESTIGATING,
+    )
+
+    assert updated.status == IncidentStatus.INVESTIGATING.value
+
+    created_at = updated.created_at
+    updated_at = updated.updated_at
+
+    if created_at.tzinfo is None:
+        created_at = created_at.replace(tzinfo=UTC)
+
+    if updated_at.tzinfo is None:
+        updated_at = updated_at.replace(tzinfo=UTC)
+
+    assert updated_at >= created_at
+
+    session.close()
+
+
+def test_database_status_update_rejects_invalid_transition() -> None:
+    """An invalid transition should not modify the stored incident."""
+
+    session = create_test_session()
+    incident = make_incident()
+
+    persist_incidents(session, [incident])
+
+    with pytest.raises(
+        IncidentTransitionError,
+        match="Cannot transition",
+    ):
+        update_incident_status(
+            session,
+            incident.incident_id,
+            IncidentStatus.CLOSED,
+        )
+
+    stored = get_incident(session, incident.incident_id)
+
+    assert stored is not None
+    assert stored.status == IncidentStatus.OPEN.value
+
+    session.close()
+
+
+def test_database_status_update_rejects_unknown_incident() -> None:
+    """Updating an unknown incident should produce a clear error."""
+
+    session = create_test_session()
+
+    with pytest.raises(
+        IncidentPersistenceError,
+        match="was not found",
+    ):
+        update_incident_status(
+            session,
+            uuid4(),
+            IncidentStatus.INVESTIGATING,
+        )
 
     session.close()

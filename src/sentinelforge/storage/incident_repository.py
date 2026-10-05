@@ -10,7 +10,11 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from sentinelforge.incidents.models import Incident
+from sentinelforge.incidents.models import (
+    Incident,
+    IncidentStatus,
+)
+from sentinelforge.incidents.service import transition_incident
 from sentinelforge.storage.models import StoredIncident
 
 
@@ -84,3 +88,52 @@ def get_incident(
     """Retrieve one incident by identifier."""
 
     return session.get(StoredIncident, str(incident_id))
+
+
+def update_incident_status(
+    session: Session,
+    incident_id: UUID,
+    new_status: IncidentStatus,
+) -> StoredIncident:
+    """Validate and persist an incident lifecycle transition."""
+
+    stored_incident = session.get(
+        StoredIncident,
+        str(incident_id),
+    )
+
+    if stored_incident is None:
+        raise IncidentPersistenceError(f"Incident '{incident_id}' was not found")
+
+    incident = Incident.model_validate(
+        {
+            "incident_id": stored_incident.incident_id,
+            "title": stored_incident.title,
+            "description": stored_incident.description,
+            "severity": stored_incident.severity,
+            "status": stored_incident.status,
+            "alert_ids": stored_incident.alert_ids,
+            "summary": stored_incident.summary,
+            "resolution_notes": stored_incident.resolution_notes,
+            "created_at": stored_incident.created_at,
+            "updated_at": stored_incident.updated_at,
+        }
+    )
+
+    updated_incident = transition_incident(
+        incident,
+        new_status,
+    )
+
+    stored_incident.status = updated_incident.status.value
+    stored_incident.updated_at = updated_incident.updated_at
+
+    try:
+        session.commit()
+    except SQLAlchemyError as exc:
+        session.rollback()
+        raise IncidentPersistenceError(
+            f"Could not update incident '{incident_id}': {exc}"
+        ) from exc
+
+    return stored_incident
