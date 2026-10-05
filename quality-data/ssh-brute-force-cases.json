@@ -1,0 +1,200 @@
+[
+  {
+    "case_id": "CASE-001",
+    "description": "Known SSH brute-force simulation that should alert.",
+    "expected_alert": true,
+    "events": [
+      {
+        "timestamp": "2026-10-04T14:00:00Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T14:00:10Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T14:00:20Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T14:00:30Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T14:00:40Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      }
+    ]
+  },
+  {
+    "case_id": "CASE-002",
+    "description": "Four failed logins that should be investigated but do not meet the threshold.",
+    "expected_alert": true,
+    "events": [
+      {
+        "timestamp": "2026-10-04T15:00:00Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T15:00:10Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T15:00:20Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T15:00:30Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      }
+    ]
+  },
+  {
+    "case_id": "CASE-003",
+    "description": "Approved test activity incorrectly expected not to alert.",
+    "expected_alert": false,
+    "events": [
+      {
+        "timestamp": "2026-10-04T16:00:00Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T16:00:10Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T16:00:20Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T16:00:30Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T16:00:40Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_failure",
+        "action": "ssh_login_failed",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      }
+    ]
+  },
+  {
+    "case_id": "CASE-004",
+    "description": "Successful SSH activity that should not alert.",
+    "expected_alert": false,
+    "events": [
+      {
+        "timestamp": "2026-10-04T17:00:00Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_success",
+        "action": "ssh_login_success",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T17:00:10Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_success",
+        "action": "ssh_login_success",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      },
+      {
+        "timestamp": "2026-10-04T17:00:20Z",
+        "host_id": "linux-lab-01",
+        "source": "linux_auth",
+        "category": "authentication",
+        "event_type": "authentication_success",
+        "action": "ssh_login_success",
+        "username": "alex",
+        "source_ip": "192.168.56.20"
+      }
+    ]
+  }
+]
