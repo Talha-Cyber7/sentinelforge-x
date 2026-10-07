@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">S</div>
+                <div>
+                    <strong>SentinelForge</strong>
+                    <span>X Analyst Console</span>
+                </div>
+            </div>
+
+            <nav class="navigation" aria-label="Primary navigation">
+                <a class="nav-item active" href="/dashboard">
+                    <span>◈</span>
+                    Overview
+                </a>
+                <a class="nav-item" href="/alerts">
+                    <span>!</span>
+                    Alerts
+                </a>
+                <a class="nav-item" href="/incidents">
+                    <span>▣</span>
+                    Incidents
+                </a>
+                <a class="nav-item" href="/events">
+                    <span>⌁</span>
+                    Event stream
+                </a>
+                <a class="nav-item" href="/quality">
+                    <span>◇</span>
+                    Detection quality
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                Local laboratory
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">Security operations</p>
+                    <h1>Analyst overview</h1>
+                </div>
+                <div class="topbar-meta">
+                    <span class="environment-badge">DEVELOPMENT LAB</span>
+                    <span class="user-badge">TC</span>
+                </div>
+            </header>
+
+            <section class="hero-panel">
+                <div>
+                    <p class="eyebrow accent">Detection intelligence</p>
+                    <h2>See the signal behind the alert.</h2>
+                    <p class="hero-copy">
+                        SentinelForge X connects telemetry, detection logic and
+                        investigation evidence into one explainable workflow.
+                    </p>
+                </div>
+                <div class="hero-status">
+                    <span class="status-dot"></span>
+                    Systems operational
+                </div>
+            </section>
+
+            <section class="metrics-grid" aria-label="Security metrics">
+                <article class="metric-card">
+                    <div class="metric-label">Open alerts</div>
+                    <div class="metric-value">—</div>
+                    <div class="metric-note">Awaiting live data</div>
+                </article>
+
+                <article class="metric-card">
+                    <div class="metric-label">Active incidents</div>
+                    <div class="metric-value">—</div>
+                    <div class="metric-note">No incidents loaded</div>
+                </article>
+
+                <article class="metric-card">
+                    <div class="metric-label">Events processed</div>
+                    <div class="metric-value">—</div>
+                    <div class="metric-note">Telemetry pipeline ready</div>
+                </article>
+
+                <article class="metric-card highlight">
+                    <div class="metric-label">Detection quality</div>
+                    <div class="metric-value">—</div>
+                    <div class="metric-note">Run an evaluation to measure</div>
+                </article>
+            </section>
+
+            <section class="content-grid">
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Investigation queue</p>
+                            <h3>Recent alerts</h3>
+                        </div>
+                        <a href="/alerts" class="panel-link">View all</a>
+                    </div>
+
+                    <div class="empty-state">
+                        <div class="empty-icon">⌁</div>
+                        <strong>No alerts loaded yet</strong>
+                        <p>
+                            Run the SentinelForge CLI or ingest telemetry to
+                            populate the investigation queue.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Engineering health</p>
+                            <h3>Detection quality</h3>
+                        </div>
+                        <a href="/quality" class="panel-link">Inspect</a>
+                    </div>
+
+                    <div class="quality-placeholder">
+                        <div class="quality-ring">
+                            <span>—</span>
+                        </div>
+                        <div>
+                            <strong>Awaiting evaluation</strong>
+                            <p>
+                                Precision, recall and F1 will appear after a
+                                quality run.
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <footer class="page-footer">
+                <span>SentinelForge X v0.1.0</span>
+                <span>Explainable by design · Evidence before conclusions</span>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>

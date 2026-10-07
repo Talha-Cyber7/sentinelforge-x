@@ -2,10 +2,20 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Annotated, Literal
 from uuid import UUID
 
-from fastapi import Depends, FastAPI, HTTPException, Query
+from fastapi import (
+    Depends,
+    FastAPI,
+    HTTPException,
+    Query,
+    Request,
+)
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -20,9 +30,7 @@ from sentinelforge.api.schemas import (
 from sentinelforge.incidents.models import Incident, IncidentStatus
 from sentinelforge.incidents.service import IncidentTransitionError
 from sentinelforge.storage.alert_repository import list_alerts
-from sentinelforge.storage.event_repository import (
-    list_events,
-)
+from sentinelforge.storage.event_repository import list_events
 from sentinelforge.storage.incident_repository import (
     get_incident,
     list_incidents,
@@ -30,6 +38,12 @@ from sentinelforge.storage.incident_repository import (
     update_incident_status,
 )
 from sentinelforge.storage.models import AlertStatus
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+
+templates = Jinja2Templates(
+    directory=str(PROJECT_ROOT / "templates"),
+)
 
 
 class HealthResponse(BaseModel):
@@ -46,6 +60,12 @@ app = FastAPI(
         "Detection engineering and incident investigation API for SentinelForge X."
     ),
     version="0.1.0",
+)
+
+app.mount(
+    "/static",
+    StaticFiles(directory=str(PROJECT_ROOT / "static")),
+    name="static",
 )
 
 
@@ -224,3 +244,21 @@ def change_incident_status(
         ) from exc
 
     return IncidentResponse.model_validate(stored_incident)
+
+
+@app.get(
+    "/dashboard",
+    response_class=HTMLResponse,
+    include_in_schema=False,
+    tags=["web"],
+)
+def dashboard(request: Request) -> HTMLResponse:
+    """Render the SentinelForge X analyst dashboard."""
+
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "page_title": "SentinelForge X",
+        },
+    )
